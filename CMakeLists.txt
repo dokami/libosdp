@@ -18,6 +18,8 @@ set(PROJECT_HOMEPAGE     "https://libosdp.gotomain.io/")
 set(PROJECT_DESCRIPTION  "Open Supervised Device Protocol (OSDP) Library")
 set(PROJECT_LICENSE      "Apache-2.0")
 
+set(CONFIG_OSDP_FILE true)
+
 ## Includes
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(AddCCompilerFlag)
@@ -28,6 +30,7 @@ include(GNUInstallDirs)
 ## Global settings
 add_c_compiler_flag(-Wall)
 add_c_compiler_flag(-Wextra)
+add_c_compiler_flag(-fpic)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -39,12 +42,12 @@ option(CONFIG_OSDP_STATIC_PD "Setup PD single statically" OFF)
 add_subdirectory(utils)
 add_subdirectory(src)
 if (NOT CONFIG_OSDP_STATIC_PD)
-	add_subdirectory(osdpctl)
-	add_subdirectory(test)
-	add_subdirectory(samples/c)
-	add_subdirectory(samples/cpp)
-	add_subdirectory(doc)
-	add_subdirectory(python)
+	#add_subdirectory(osdpctl)
+	#add_subdirectory(test)
+	#add_subdirectory(samples/c)
+	#add_subdirectory(samples/cpp)
+	#add_subdirectory(doc)
+	#add_subdirectory(python)
 endif()
 
 ## uninstall target

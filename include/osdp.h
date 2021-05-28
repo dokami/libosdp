@@ -692,6 +692,8 @@ void osdp_cp_refresh(osdp_t *ctx);
  */
 void osdp_cp_teardown(osdp_t *ctx);
 
+int osdp_cp_get_pd_id(osdp_t *ctx, int pd, struct osdp_pd_id *id);
+
 /**
  * @brief Generic command enqueue API.
  *

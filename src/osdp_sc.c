@@ -6,6 +6,8 @@
 
 #include "osdp_common.h"
 
+#define USE_MASTER_KEY_AS_SCBK
+
 #define OSDP_SC_EOM_MARKER             0x80  /* End of Message Marker */
 #define LOG_TAG "SC: "
 
@@ -17,13 +19,18 @@ static const uint8_t osdp_scbk_default[16] = {
 
 void osdp_compute_scbk(struct osdp_pd *pd, uint8_t *master_key, uint8_t *scbk)
 {
-	int i;
+#ifdef USE_MASTER_KEY_AS_SCBK
+    (void)pd;
+    memcpy(scbk, master_key, 16);
+#else
+    int i;
 
 	memcpy(scbk, pd->sc.pd_client_uid, 8);
 	for (i = 8; i < 16; i++) {
 		scbk[i] = ~scbk[i - 8];
 	}
 	osdp_encrypt(master_key, NULL, scbk, 16);
+#endif
 }
 
 void osdp_compute_session_keys(struct osdp *ctx)

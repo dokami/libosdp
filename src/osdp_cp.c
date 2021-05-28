@@ -1065,6 +1065,25 @@ static int osdp_cp_send_command_keyset(osdp_t *ctx, struct osdp_cmd_keyset *p)
 /* --- Exported Methods --- */
 
 OSDP_EXPORT
+int osdp_cp_get_pd_id(osdp_t *ctx, int pd, struct osdp_pd_id *id)
+{
+    assert(ctx);
+    assert(id);
+
+    if (pd < 0 || pd >= NUM_PD(ctx)) {
+        LOG_ERR("Invalid PD number");
+        return -1;
+    }
+    if (TO_PD(ctx, pd)->state != OSDP_CP_STATE_ONLINE) {
+        LOG_WRN("PD not online");
+        return -1;
+    }
+    memcpy(id, &TO_PD(ctx, pd)->id, sizeof(struct osdp_pd_id));
+
+    return 0;
+}
+
+OSDP_EXPORT
 osdp_t *osdp_cp_setup(int num_pd, osdp_pd_info_t *info, uint8_t *master_key)
 {
 	int i, owner, scbk_count = 0;
